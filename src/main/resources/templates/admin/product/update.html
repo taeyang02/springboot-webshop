@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+          integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+          integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+          crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div class="container">
+  <div class="container" th:replace="/site/layout/menu :: nav"></div>
+
+  <div>
+    <form action="/smk/admin/product/update-product" enctype="multipart/form-data" method="post" th:object="${product}">
+      <div class="mb-3">
+        <label for="images1" class="form-label">Images</label>
+        <input type="file" class="form-control" id="images1" name="file">
+      </div>
+      <div class="mb-3">
+        <label for="text1" class="form-label">Name</label>
+        <input type="text" class="form-control" id="text1" th:value="${product.getName()}" th:field="*{name}">
+      </div>
+      <div class="mb-3">
+        <label for="Description" class="form-label">Description</label>
+        <input type="text" class="form-control" id="Description" th:value="${product.getDescription()}" th:field="*{description}">
+      </div>
+      <div class="mb-3">
+        <label for="text2" class="form-label">Price</label>
+        <input type="text" class="form-control" id="text2" th:value="${product.getPrice()}" th:field="*{price}">
+      </div>
+      <div class="mb-3">
+        <label for="text3" class="form-label">Quantity</label>
+        <input type="text" class="form-control" id="text3" th:value="${product.getQuantity()}" th:field="*{quantity}">
+      </div>
+      <div th:hidden="true">
+        <input th:value="${product.getCreateDate()}" th:field="*{createDate}">
+        <input th:value="${product.getCreateBy()}" th:field="*{createBy}">
+        <input th:value="${product.getQuantitySold()}" th:field="*{quantitySold}">
+        <input th:value="${product.getAvailable()}" th:field="*{available}">
+        <input th:value="${product.getId()}" th:field="*{id}">
+      </div>
+      <div class="mb-3" name="xca">
+        <label for="text4x" class="form-label">Size</label>
+        <input type="text" class="form-control" id="text4x" th:value="${product.getSize()}" placeholder="S,M,L,XL,XXL" th:field="*{size}" >
+      </div>
+        <div class="mb-3">
+          <label> CateGory</label>
+          <select class="form-select" aria-label="Default select example" name="categoryId">
+            <option th:each="category : ${categorys}" th:selected="${product.getCategory()==category?'true':'false'}" th:value="${category.getId()}" th:text="${category.getName()}"></option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+  </div>
+
+</div>
+</body>
+
+</html>

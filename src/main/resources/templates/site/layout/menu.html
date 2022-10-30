@@ -1,0 +1,73 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/smk/homepage">SMK_SHOP</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/smk/homepage">Home</a>
+                </li>
+                <li th:if="${session.userCurrent == null}" class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/smk/site/login">Login</a>
+                </li>
+                <li th:if="${session.roleAccount == 'admin' && session.userCurrent != null}" class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/smk/admin/category/list-category">CateGory</a>
+                </li>
+                <li class="nav-item" th:if="${session.roleAccount == 'admin' && session.userCurrent != null}">
+                    <a class="nav-link active" aria-current="page" href="/smk/admin/product/list-product">Product</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" th:if="${session.roleAccount == 'admin' && session.userCurrent != null}" aria-current="page" href="/smk/admin/account/list-account">Account</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="collapse navbar-collapse d-flex justify-content-end" th:if="${session.userCurrent != null}">
+            <div class="dropdown" style="margin-right: 1px" th:if="${session.roleAccount == 'admin'}">
+                <button type="button" class="btn btn-light" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a style="color: black">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+                                    <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+                                </svg> </a>
+                        </li>
+                        <li class="nav-item" th:text="${session.notification}" style="border-radius: 25px;color: white;background-color:red;font-size: 12px;height: 17px; width: 15px ;text-align: center" ></li>
+                    </ul> </button>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                    <li th:if="${session.notification} != '0'"><a class="dropdown-item active" href="/smk/card/wait-application" th:text="'Bạn đang có '+${session.notification}+' đơn hàng đợi duyệt'"></a></li>
+                    <li th:if="${session.notification} == '0'"><a class="dropdown-item active" href="#" th:text="'Bạn không có thông báo nào hết!'"></a></li>
+
+                </ul>
+            </div>
+
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="/smk/card" style="color: black">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </svg> </a>
+                </li>
+                <li class="nav-item" th:text="${session.countCard}" style="border-radius: 25px;color: white;background-color:red;font-size: 12px;height: 17px; width: 15px ;text-align: center" ></li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="'Hello,'+${session.userCurrent.getFullname()}">
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li th:if="${session.roleAccount == 'admin'}"><a class="dropdown-item" href="/smk/card/wait-application">My Waiting Application</a></li>
+                        <li><a class="dropdown-item" href="#">My Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/smk/site/logout" th:if="${session.userCurrent != null}" >Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</nav>
+
+
+

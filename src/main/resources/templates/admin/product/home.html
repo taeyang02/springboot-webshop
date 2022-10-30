@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <style>
+        .intro {
+            height: 100%;
+        }
+        .gradient-custom-1 {
+            /* fallback for old browsers */
+            background: #cd9cf2;
+
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: -webkit-linear-gradient(to top, rgba(205, 156, 242, 1), rgba(246, 243, 255, 1));
+
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: linear-gradient(to top, rgba(205, 156, 242, 1), rgba(246, 243, 255, 1))
+        }
+        table td,
+        table th {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        tbody td {
+            font-weight: 500;
+            color: #999999;
+        }
+    </style>
+</head>
+<body>
+<div class="container" th:replace="/site/layout/menu :: nav"></div>
+<section class="intro">
+    <div class="gradient-custom-1 h-100">
+        <div class="mask d-flex align-items-center h-100">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <div class="table-responsive bg-white">
+                            <div>
+                                <a href="/smk/admin/product/add-product" class="btn btn-primary">+</a>
+                            </div>
+                            <table class="table mb-0">
+                                <thead>
+                                <tr>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Quantity Sold</th>
+                                    <th scope="col"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="product,stt : ${productList}">
+                                    <th th:text="${stt.index}" scope="row" style="color: #666666;"></th>
+                                    <td th:text=" ${product.getId()}"> </td>
+                                    <td th:text="${product.getName()}"> </td>
+                                    <td th:text="${product.getPrice()}"></td>
+                                    <td th:text="${product.getQuantity()}"></td>
+                                    <td><img class="rounded-circle" width="50px" height="50px" th:src="@{/images/{id}(id=${product.getImage()})}"></td>
+                                    <td th:text="${product.getQuantitySold}"></td>
+                                    <td>
+                                        <a th:href="@{/smk/admin/product/update-product/{idPropduct}(idPropduct=${product.getId()})}">Update</a>
+                                        <a th:href="@{/smk/admin/product/delete-product/{idPropduct}(idPropduct=${product.getId()})}">Delete</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+</body>
+</html>
